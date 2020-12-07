@@ -1,0 +1,177 @@
+  <style>
+    body
+       {
+         margin: 0;
+         padding: 0;
+         font-family: sans-serif;
+         background: url(../images/table.jpg);
+         background-size: cover;
+       }
+       #color-overlay {
+         position: relative;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color:black;
+           opacity: 0.5;
+         }
+         .box
+         {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%,-50%);
+           width:700px;
+           padding: 40px;
+           background: rgba(0,0,0,.8);
+           box-sizing: border-box;
+           box-shadow: 0 15px 25px rgba(0,0,0,.5);
+           border-radius: 10px;
+           color: #fff;
+         }
+         tr{
+           color: #fff;
+         }
+          .box h2
+         {
+           margin: 0 0 30px;
+           padding: 0;
+           color: #fff;
+           text-align: center;
+         }
+         p{
+             color: #888;
+             text-align: center;
+         }
+         hr{
+           height: 1px;
+           background-color: #ccc;
+           border: none;
+         }
+         .btn-primary
+         {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+         }
+   
+     </style>
+
+   <div id="color-overlay"></div>
+   <div class="box" style="width: 600px;height: 500px;margin-top: 20px;">
+    <canvas id="myChart" style="background-color: transparent;"></canvas>
+   </div>
+       <!-- <div  style="display: none;"  class="box">
+        <%#-include('msg');%> 
+       <h2>HISTORY OF CASES</h2>
+     <table class="table table-striped">
+     <thead>
+       <tr>
+         <th scope="col">SERIOUS CASES</th>
+         <th scope="col">MILD CASES</th>
+         <th scope="col">DATE</th>
+       </tr>
+     </thead>
+     <tbody>
+      <%#if(caseHistory===null||caseHistory.lenghth===0){%>
+        <h5>No case history!<h5>
+      <%#}else{%>
+        <%#caseHistory.forEach(function(element){%>
+        <tr>
+            <td class="seriousCase" onload="pushSeriousCases('<%#=element.seriousCaseHistory%>')"><%#=element.seriousCaseHistory%></td>
+            <td class="mildCase" onload="pushMildCases('<%#=element.mildCaseHistory%>')"><%#=element.mildCaseHistory%></td>
+            <td class="" onload="pushDate('<%#=element.date.toString().substr(4, 20)%>')"><%#=element.date.toString().substr(4, 20)%></td>
+        </tr>
+       <%# })%>
+    <%#}%>
+     </tbody>
+   </table>
+   </div> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+   <script>
+    var seriousCases=[];
+    var mildCases=[];
+    var dates=[];
+    seriousCases.push(<%= seriousCases %>);
+    mildCases.push(<%= mildCases %>);
+    // dates.push(<%#= dates %>);
+    var date=3;
+    for (let i=0;i<mildCases.length;i++){
+      dates.push(date + " Sept")
+      date=date+1;
+    }
+    console.log("m"+mildCases);
+    var ctx = document.getElementById('myChart').getContext('2d');
+    const xLabel=dates;
+    Chart.defaults.global.defaultFontFamily = 'montserrat';
+    Chart.defaults.global.defaultFontSize = 16;
+    Chart.defaults.global.defaultFontColor = 'rgb(255, 99, 132)';
+    var myChart = new Chart(ctx, {
+      height:260,
+        type: 'line',
+        data: {
+            labels:xLabel ,
+            datasets: [{
+                label: 'Mild Cases',
+                data:mildCases,
+                backgroundColor:'rgba(233,111,52,0)',
+                borderColor: 'rgb(255, 193, 7)',
+                borderWidth: 1
+            },{
+                label: 'Serious Cases',
+                data:seriousCases,
+                backgroundColor:'rgba(255, 206, 86, 0)',
+                borderColor: 'red',
+                borderWidth: 1
+            }]
+        },
+        options: {
+          responsive: false,
+            width:500,
+            height:300,
+            scaleShowGridLines: false,
+            showScale: false,
+            maintainAspectRatio: this.maintainAspectRatio,
+            barShowStroke: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+            display: true,
+            position:'top',
+            align:'end',
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
+           },
+           title:{
+             display:true,
+            //  position:top,
+             fontSize:25,
+             fontColor: 'rgb(255, 99, 132)',
+            //  fontFamily:'montserrat',
+             text:'History of Cases'
+           },
+           tooltips: {
+            callbacks: {
+                labelColor: function(tooltipItem, chart) {
+                    return {
+                        borderColor: 'rgb(0, 0, 0)',
+                        backgroundColor: 'rgb(0, 0, 0)'
+                    };
+                },
+                labelTextColor: function(tooltipItem, chart) {
+                    return 'rgb(255, 99, 132)';
+                }
+            }
+        },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    </script>

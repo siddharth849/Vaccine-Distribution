@@ -1,0 +1,61 @@
+<header>
+  <nav class="navbar navbar-expand-lg  navbar-dark fixed-top ">  
+    <a class="navbar-brand" href="/"><img src="../images/number.png" style="height:50px; text-align: center;"> Vaccine Distribution</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ">
+        <a class="nav-item nav-link active" href="/">HOME <span class="sr-only">(current)</span></a>
+        <% if (!locals.users){%>
+          <a  style="position:absolute; right: 85px;"  class="nav-item nav-link active"href="/users/login">LOGIN</a>
+        <%} else {%>
+          <a  style="float: left;" class="nav-item nav-link active" href="/users/profile">PROFILE</a>
+            <%if(users.level===0){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addStates">ADD STATE</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addProductionCentres">ADD PRODUCTION CENTER</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/verifyVaccineUsage">VERIFY VACCINE</a>
+
+            <% }if(users.level===1){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addHospitals">ADD HOSPITAL</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/verifyVaccineUsage">VERIFY VACCINE</a>
+            <%}if(users.level===2){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/users/addPatient">ADD PATIENT</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/uploadCases">UPLOAD CASES</a>
+            <%}if(users.level===3){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/uploadVaccine">UPLOAD VACCINE</a>
+            <%}if(users.level!==3&&users.level!==4){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/caseHistory">CASE HISTORY</a>
+            <%}if(users.level!==4){%>
+            <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/vaccineHistory">VACCINE HISTORY</a>
+            <%}if(users.level===0||users.level===1){%>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/distributionStatus">DISTRIBUTION STATUS</a>
+              <a  style="float: left;" class="nav-item nav-link active" href="/hospitals/distributionStatusHistory">DISTRIBUTION HISTORY</a>
+            <%}%>  
+            <a style="position:absolute; right: 10px;"  class="nav-item nav-link active " href="/users/logout">LOGOUT</a>
+        <%} %>
+      </div>
+    </div>
+  </nav>
+</header>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+            $(".menu-icon").on("click", function() {
+                  $("nav ul").toggleClass("showing");
+            });
+      });
+
+      // Scrolling Effect
+
+      $(window).on("scroll", function() {
+            if($(window).scrollTop()) {
+                  $('nav').addClass('black');
+            }
+
+            else {
+                  $('nav').removeClass('black');
+            }
+      })
+</script>

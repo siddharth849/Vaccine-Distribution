@@ -1,0 +1,92 @@
+
+  <style>
+    body
+       {
+         margin: 0;
+         padding: 0;
+         font-family: sans-serif;
+         background: url(../images/globe.jpeg);
+         background-size: cover;
+       }
+       #color-overlay {
+         position: relative;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color:black;
+           opacity: 0.3;
+         }
+         .box
+         {
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%,-50%);
+           width:700px;
+           padding: 40px;
+           background: rgba(0,0,0,.8);
+           box-sizing: border-box;
+           box-shadow: 0 15px 25px rgba(0,0,0,.5);
+           border-radius: 10px;
+           color: #fff;
+         }
+         tr{
+           color: #fff;
+         }
+          .box h2
+         {
+           margin: 0 0 30px;
+           padding: 0;
+           color: #fff;
+           text-align: center;
+         }
+         p{
+             color: #888;
+             text-align: center;
+         }
+         hr{
+           height: 1px;
+           background-color: #ccc;
+           border: none;
+         }
+         .btn-primary
+         {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+         }
+   
+     </style>
+   <div id="color-overlay"></div>
+       <div class="box">
+        <%-include('msg');%> 
+       <h2>DISTRIBUTION STATUS HISTORY</h2>
+     <table class="table table-striped">
+     <thead>
+       <tr>
+         <th scope="col">STATE</th>
+         <th scope="col">NO. OF VACCINES</th>
+         <th scope="col">DATE AND TIME</th>
+       </tr>
+     </thead>
+     <tbody>
+      <%if(childs===null||childs.lenghth===0){%>
+        <h5>No vaccine history!<h5>
+      <%}else{%>
+        <%childs.forEach(function(element){%>
+        <%if(element.vaccineHistory!==null&&element.vaccineHistory.length!==0){%>
+            <%for(var i=element.vaccineHistory.length;i>0;i--){%>
+                <tr>
+                    <td><%=element.username%></td>
+                    <td><%=element.vaccineHistory[i-1].receivedVaccines%></td>
+                    <td>Sept 20 <%=element.vaccineHistory[i-1].date.toString().substr(10, 15)%></td>
+                </tr>
+            <%}%>
+        <%}%>
+       <% })%>
+    <%}%>
+     </tbody>
+   </table>
+   </div>
+     
